@@ -1,0 +1,96 @@
+@startuml
+
+class TodoListApplication {
+    +void start(Stage)
+    +{static}void main()
+}
+
+class TodoListApplicationController {
+    ..@FXML Variables..
+    -Button addItemButton
+    -Button clearItemButton
+    -TableColumn<Item, Boolean> completedColumn
+    -TableColumn<Item, String> descriptionColumn
+    -Label descriptionCharCounter
+    -TableColumn<Item, String> dueDateColumn
+    -Button exportButton
+    -MenuItem exportMenu
+    -Button importButton
+    -MenuItem importMenu
+    -TableView<Item> itemTable
+    -TextField newDescriptionField
+    -DatePicker newDueDateField
+    -Button removeItemButton
+    -Label selectedItemCounter
+    -Button showAllItemsButton
+    -Button showCompleteItemsButton
+    -Button showIncompleteItemsButton
+    ..Other Variables..
+    -ObservableList items
+    -StringConverter<LocalDate> converter
+    -Validator validator
+    --
+    ..@FXML Methods..
+    void onAddItemButtonClicked()
+    void onAllItemsButtonClicked()
+    void onClearButtonClicked()
+    void onCompleteItemsButtonClicked()
+    void onDescriptionColumnClicked()
+    void onDescriptionColumnEdit(CellEditEvent<Item, String>)
+    void onDescriptionFieldFill()
+    void onDueDateColumnEdit(CellEditEvent<Item, String>)
+    void onExportButtonClicked()
+    void onImportButtonClicked()
+    void onIncompleteItemsButtonClicked()
+    void onRemoveButtonClicked()
+    +void initialize()
+    ..Other Methods..
+    +void createAndAddItem(String, String)
+    +void removeSelectedItems(List<Item>)
+    +void clear()
+    +List<Item> getItemList()
+    +void setItemList(List<Item> newItemList)
+}
+
+class Item {
+    -String description
+    -String dueDate
+    -SimpleBooleanProperty completed
+
+    +String getDescription()
+    +String getDueDate()
+    +SimpleBooleanProperty getCompleted()
+    +boolean getCompletedValue()
+    +void setDescription(String)
+    +void setDueDate(String dueDate)
+    +void setDueDate(LocalDate)
+    +void setCompleted(SimpleBooleanProperty)
+}
+
+class Validator {
+    +String verifyDescription(String)
+    +String verifyDueDate(String)
+    +void editDescription(Item, String)
+}
+
+class FileHandler {
+    -File path
+    -List<Item> list
+
+    +List<Item> fileImport()
+    +String fileExport()
+}
+
+TodoListApplication -right- TodoListApplicationController : < Initializes Stage
+TodoListApplication -right- TodoListApplicationController : > Controls Stage
+TodoListApplicationController o-- Item
+TodoListApplicationController o-- Validator
+TodoListApplicationController o-- FileHandler
+
+note right of TodoListApplicationController::items
+    Contains many Items
+end note
+
+
+
+@enduml
