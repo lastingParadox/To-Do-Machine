@@ -11,64 +11,60 @@ import java.time.LocalDate;
 
 public class Item {
 
-    //Create new private String description
-    //Create new private String dueDate
-    //Create new private SimpleBooleanProperty completed
+    private String description;
+    private String dueDate;
+    private SimpleBooleanProperty completed = new SimpleBooleanProperty(false);
 
     //Item Constructor for the GUI:
     Item(String description, LocalDate dueDate) {
-        //this description is equal to description
-        //this dueDate is equal to the string value of dueDate
+        this.description = description;
+        this.dueDate = dueDate.toString();
     }
 
     //Item Constructor for FileImport:
     Item(String description, String dueDate) {
-        //this description is equal to description
-        //this dueDate is equal to dueDate
+        this.description = description;
+        this.dueDate = dueDate;
     }
 
     //Item Constructor for only a description being provided:
     Item(String description) {
-        //this description is equal to description
+        this.description = description;
     }
 
     //Getters
     public String getDescription() {
-        //return description
-        return null;
+        return description;
     }
 
     public String getDueDate() {
-        //return dueDate
-        return null;
+        return dueDate;
     }
 
     //Used in changing the value of completed through the completed tableColumn
     public SimpleBooleanProperty getCompleted() {
-        //returns completed
-        return null;
+        return completed;
     }
 
     public boolean getCompletedValue() {
-        //returns the boolean value of completed
-        return false;
+        return completed.getValue();
     }
 
     //Setters
     public void setDescription(String description) {
-        //this description is equal to description
+        this.description = description;
     }
 
     public void setDueDate(String dueDate) {
-        //this dueDate is equal to dueDate
+        this.dueDate = dueDate;
     }
 
     //Used to change dueDate through a LocalDate format
     public void setDueDate(LocalDate dueDate) {
-        //this dueDate is equal to the string value of dueDate
+        this.dueDate = dueDate.toString();
     }
 
     public void setCompleted(SimpleBooleanProperty completed) {
-        //this completed is equal to completed
+        this.completed = completed;
     }
 }

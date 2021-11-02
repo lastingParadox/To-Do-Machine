@@ -8,16 +8,10 @@ package baseline;
 public class Validator {
 
     public String verifyDescription(String description) {
-        //Create a new Alert "alert" of type ERROR
-        //Set the text of alert to "An item's description must be between 1 and 256 characters."
-        //If description is greater than 256 characters:
-            //description equals the substring of description from 0 to 256
-            //Show alert
-        //Else if description is equal to 0 characters:
-            //Show alert
-
-        //return description
-        return null;
+        if (description.length() > 256) {
+            description = description.substring(0, 256);
+        }
+        return description;
     }
 
     public String verifyDueDate(String dueDate) {

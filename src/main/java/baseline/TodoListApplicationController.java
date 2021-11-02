@@ -5,8 +5,13 @@
 
 package baseline;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.util.List;
 
@@ -48,7 +53,7 @@ public class TodoListApplicationController {
 
     @FXML private Button showIncompleteItemsButton;
 
-    //Create new ObservableList "items" equal to FXCollections observableArrayList
+    private final ObservableList<Item> items = FXCollections.observableArrayList();
 
     //Create new StringConverter of LocalDates "converter"
         //Final DateTimeFormatter "dateFormatter" is the pattern "yyyy-MM-dd"
@@ -62,18 +67,31 @@ public class TodoListApplicationController {
             //Else
                 //Return null
 
-    //Create new Validator "validator"
+    private final Validator validator = new Validator();
 
     @FXML
     void onAddItemButtonClicked() {
-        //If validator.verifyDescription(newDescriptionField's text) equals "":
-            //Return
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        if(newDescriptionField.getText().equals("")) {
+            alert.setContentText("An item's description must be between 1 and 256 characters.");
+            alert.show();
+            return;
+        }
+        //Scenario occurs if the user is somehow able to type past 256 characters in the field
+        else if (newDescriptionField.getText().length() > 256) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(String.format(
+                    "An item's description must be between 1 and 256 characters.%nThe description provided has been shortened."));
+            alert.show();
+        }
+        Item newItem = new Item(newDescriptionField.getText());
+        if(newDueDateField.getValue() != null)
+            newItem.setDueDate(newDueDateField.getValue());
 
-        //getItemList(newDescriptionField.getText(), newDueDateField.getText())
-
-        //newDescriptionField is set to ""
-        //newDueDateField is set to null
-        //newDueDateField's text is set to ""
+        items.add(newItem);
+        newDescriptionField.setText("");
+        newDueDateField.getEditor().setText("");
+        newDueDateField.setValue(null);
     }
 
     @FXML
@@ -109,7 +127,7 @@ public class TodoListApplicationController {
 
     @FXML
     void onDescriptionFieldFill() {
-        //Set newDescriptionField's text to validator.verifyDescription(newDescriptionField's text)
+        newDescriptionField.setText(validator.verifyDescription(newDescriptionField.getText()));
     }
 
     @FXML
@@ -155,34 +173,38 @@ public class TodoListApplicationController {
 
     @FXML
     public void initialize() {
-        //Make itemTable's selectionMode MULTIPLE
-        //Add a listener for the currently selected items in the table:
-            //Int count is the number of currently selected items
-            //Set selectedItemCounter to "Number of Selected Items: 'count'"
-        //Set itemTable's items to "items"
+        itemTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        itemTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            int count = itemTable.getSelectionModel().getSelectedItems().size();
+            selectedItemCounter.setText(String.format("Number of Selected Items: %d", count));
+        }));
+        itemTable.setItems(items);
 
-        //Set descriptionColumn's cellValueFactory to a propertyValueFactory "description"
-        //Set descriptionColumn's cellFactory to a TextFieldCell for the entire column
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        //Set descriptionColumn's cellValueFactory to a propertyValueFactory "dueDate"
-        //Set dueDateColumn's cellFactory to a TextFieldCell for the entire column
+        dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        dueDateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        //Set completedColumn's cellValueFactory to (lambda) item.getCompleted()
-        //Set completedColumn's cellFactory to a column of CheckBoxTableCells
+        completedColumn.setCellValueFactory(param -> param.getValue().getCompleted());
+        completedColumn.setCellFactory(column -> new CheckBoxTableCell<>());
 
-        //Add a listener for newDescriptionField's text:
-            //Set descriptionCharCounter's text to "Current: 'newDescriptionField's text length' characters"
-        //If newDescriptionField's text length is greater than or equal to 256:
-            //Set newDescriptionField's text to a substring of newDescriptionField's text from index 0 to 256
-
-        //Set newDueDateField's converter to "converter"
+        newDescriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
+            descriptionCharCounter.setText(
+                    String.format("Current: %d characters", newDescriptionField.getText().length()));
+            if (newDescriptionField.getText().length() >= 256) {
+                newDescriptionField.setText(newDescriptionField.getText().substring(0, 256));
+            }
+        });
+        //newDueDateField.setConverter(converter);
     }
 
     public void createAndAddItem(String descriptionField, String dueDateField) {
-        //Item item is a new Item with constructor descriptionField
-        //If dueDateField is not null:
-            //item.setDueDate(dueDateField)
-        //items.add(item)
+        Item item = new Item(descriptionField);
+        if (dueDateField != null) {
+            item.setDueDate(dueDateField);
+        }
+        items.add(item);
     }
 
     public void removeSelectedItems(List<Item> removedItems) {
@@ -194,8 +216,7 @@ public class TodoListApplicationController {
     }
 
     public List<Item> getItemList() {
-        //Return items.getItems()
-        return null;
+        return items;
     }
 
     public void setItemList(List<Item> newItemList) {
