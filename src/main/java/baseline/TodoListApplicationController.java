@@ -96,13 +96,7 @@ public class TodoListApplicationController {
             alert.show();
         }
 
-        Item newItem = new Item(newDescriptionField.getText());
-
-        //As a DatePicker doesn't allow you to commit a non-date value, there's no need to validate what's entered here.
-        if(newDueDateField.getValue() != null)
-            newItem.setDueDate(newDueDateField.getValue());
-
-        items.add(newItem);
+        createAndAddItem(newDescriptionField.getText(), newDueDateField.getValue().toString());
 
         newDescriptionField.setText("");
         newDueDateField.getEditor().setText("");
@@ -116,15 +110,16 @@ public class TodoListApplicationController {
 
     @FXML
     void onClearButtonClicked() {
-        //Create a new alert of type CONFIRMATION
-        //Set the title of alert to "Clear all items"
-        //Set the content text of alert to "Are you sure you want to delete all items?"
-        //Create yes button
-        //Create no button
-        //Add buttons to alert
-        //Show alert and wait for a button to be clicked:
-            //If yes:
-               //clear(items)
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Clear all items");
+        alert.setContentText("Are you sure you want to delete all items?");
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yes, no);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == yes)
+                clear();
+        });
     }
 
     @FXML
@@ -170,7 +165,6 @@ public class TodoListApplicationController {
             alert.show();
             itemTable.refresh();
         }
-
     }
 
     @FXML
@@ -201,8 +195,8 @@ public class TodoListApplicationController {
 
     @FXML
     void onRemoveButtonClicked() {
-        //removeSelectedItems(the currently selected items in the table)
-            //(itemTable.getSelectionModel().getSelectedItems())
+        //Items to be removed are the currently selected items in the table.
+        removeSelectedItems(itemTable.getSelectionModel().getSelectedItems());
     }
 
     @FXML
@@ -243,11 +237,11 @@ public class TodoListApplicationController {
     }
 
     public void removeSelectedItems(List<Item> removedItems) {
-        //Remove removedItems from items
+        items.removeAll(removedItems);
     }
 
     public void clear() {
-        //clear items
+        items.clear();
     }
 
     public List<Item> getItemList() {
@@ -255,7 +249,7 @@ public class TodoListApplicationController {
     }
 
     public void setItemList(List<Item> newItemList) {
-        //Clear items
-        //Add newItemList to items
+        items.clear();
+        items.addAll(newItemList);
     }
 }

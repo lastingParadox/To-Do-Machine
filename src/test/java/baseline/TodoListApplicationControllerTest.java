@@ -2,73 +2,85 @@ package baseline;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TodoListApplicationControllerTest {
 
-    //Create new TodoListApplicationController test
+    TodoListApplicationController test = new TodoListApplicationController();
 
     @Test
     void createAndAddItemTest() {
-        //test.createAndAddItemTest("Test Description", "")
+        test.createAndAddItem("Test Description", "");
 
-        //List of items expected contains a new Item with constructor "Test Description"
-        //List of items actual equals test.getItemList()
+        List<Item> actualList = test.getItemList();
 
-        //AssertEquals(expected, actual)
+        String expected = "Test Description";
+        String actual = actualList.get(0).getDescription();
+
+        assertEquals(expected, actual);
     }
 
     @Test
     void createAndAddItemTestDate() {
-        //test.createAndAddItemTest("Test Description", "2021-10-31")
+        test.createAndAddItem("Test Description", "2021-10-31");
 
-        //List of items expected contains a new Item with constructors "Test Description", "2021-10-31"
-        //List of items actual equals test.getItemList()
+        List<Item> actualList = test.getItemList();
 
-        //AssertEquals(expected, actual)
+        String expected = "2021-10-31";
+        String actual = actualList.get(0).getDueDate();
+
+        assertEquals(expected, actual);
     }
 
     @Test
     void setItemListTest() {
-        //List of items expected contains two items:
-            //A new Item with constructors "Test Description", "2021-10-31"
-            //A new Item with constructors "Test Description 2", "2021-10-31"
+        List<Item> expected = new ArrayList<>();
+        expected.add(new Item("Test Description", "2021-10-31"));
+        expected.add(new Item("Test Description 2", "2021-10-31"));
 
-        //test.setItemList(expected)
-        //List of items actual equals test.getItemList()
+        test.setItemList(expected);
 
-        //AssertEquals(expected, actual)
+        List<Item> actual = test.getItemList();
+
+        assertEquals(actual, expected);
     }
 
     @Test
     void removeSelectedItemsTest() {
-        //List of items "items" contains two items:
-            //A new Item with constructors "Test Description", "2021-10-31"
-            //A new Item with constructors "Test Description 2", "2021-10-31"
-        //test.setItemList(items)
+        List<Item> items = new ArrayList<>();
+        items.add(new Item("Test Description", "2021-10-31"));
+        items.add(new Item("Test Description 2", "2021-10-31"));
 
-        //List of items "expected" contains items.get(1)
+        test.setItemList(items);
 
-        //items.remove(1)
-        //test.removeSelectedItems(items)
+        List<Item> expected = new ArrayList<>();
+        expected.add(items.get(1));
 
-        //List of items "actual" equals test.getItemList()
+        items.remove(1);
+        test.removeSelectedItems(items);
 
-        //AssertEquals(expected, actual)
+        List<Item> actual = test.getItemList();
+
+        assertEquals(expected, actual);
     }
 
     @Test
     void clearTest() {
-        //List of items "items" contains two items:
-            //A new Item with constructors "Test Description", "2021-10-31"
-            //A new Item with constructors "Test Description 2", "2021-10-31"
-        //test.setItemList(items)
+        List<Item> items = new ArrayList<>();
+        items.add(new Item("Test Description", "2021-10-31"));
+        items.add(new Item("Test Description 2", "2021-10-31"));
 
-        //test.clear()
+        test.setItemList(items);
 
-        //List of items "expected" is empty
-        //List of items "actual" equals test.getItemList()
+        test.clear();
 
-        //AssertEquals(expected, actual)
+        List<Item> expected = new ArrayList<>();
+
+        List<Item> actual = test.getItemList();
+
+        assertEquals(expected, actual);
     }
 }
