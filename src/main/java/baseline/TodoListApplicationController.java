@@ -7,13 +7,17 @@ package baseline;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -96,7 +100,7 @@ public class TodoListApplicationController {
             alert.show();
         }
 
-        createAndAddItem(newDescriptionField.getText(), newDueDateField.getValue().toString());
+        createAndAddItem(newDescriptionField.getText(), newDueDateField.getValue());
 
         newDescriptionField.setText("");
         newDueDateField.getEditor().setText("");
@@ -105,11 +109,12 @@ public class TodoListApplicationController {
 
     @FXML
     void onAllItemsButtonClicked() {
-        //Set itemTable's elements to items
+        itemTable.setItems(items);
     }
 
     @FXML
     void onClearButtonClicked() {
+        //Creates a prompt box, if user accepts, clears all items.
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Clear all items");
         alert.setContentText("Are you sure you want to delete all items?");
@@ -124,12 +129,14 @@ public class TodoListApplicationController {
 
     @FXML
     void onCompleteItemsButtonClicked() {
-        //FilteredList of Items "completeItems" is a new FilteredList of "items" with filter getCompletedValue
-        //Set itemTable's elements to completeItems
+        FilteredList<Item> completeItems = new FilteredList<>(items, Item::getCompletedValue);
+        itemTable.setItems(completeItems);
     }
 
     @FXML
     void onDescriptionColumnEdit(TableColumn.CellEditEvent<Item, String> cell) {
+        //Creates alerts if description is over 256 characters or is empty
+        //If not empty, sets the description to a provided description less than 256 characters.
         Item item = itemTable.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
@@ -156,6 +163,7 @@ public class TodoListApplicationController {
 
     @FXML
     void onDueDateColumnEdit(TableColumn.CellEditEvent<Item, String> cell) {
+        //If the dueDate given is a valid date, sets the date, otherwise creates an alert and does not commit.
         Item item = itemTable.getSelectionModel().getSelectedItem();
         if(!validator.verifyDueDate(cell.getNewValue()).equals("error"))
             item.setDueDate(cell.getNewValue());
@@ -169,28 +177,44 @@ public class TodoListApplicationController {
 
     @FXML
     void onExportButtonClicked() {
-        //New Stage "stage" = (Stage) scene of importButton ((Stage) importButton.getScene().getWindow())
-        //New FileChooser fileExport
-        //Set fileImport's title to "Export To Do List File"
-        //New File "path" is equal to fileExport save dialog (fileExport.showSaveDialog(stage))
-        //New FileHandler "fileHandler" is made with constructors "path" and "items"
-        //fileHandler.fileExport()
+        Stage stage = (Stage) importButton.getScene().getWindow();
+        FileChooser fileExport = new FileChooser();
+        fileExport.setTitle("Export To Do List File");
+
+        File path = fileExport.showSaveDialog(stage);
+        if (path == null)
+            return;
+
+        FileHandler fileHandler = new FileHandler(path, items);
+        fileHandler.fileExport();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Todo List successfully exported!");
+        alert.show();
     }
 
     @FXML
     void onImportButtonClicked() {
-        //New Stage "stage" = (Stage) scene of importButton ((Stage) importButton.getScene().getWindow())
-        //New FileChooser fileImport
-        //Set fileImport's title to "Select To Do List File"
-        //New File "path" is equal to fileImport dialog (fileImport.showOpenDialog(stage))
-        //New FileHandler "fileHandler" is made with constructor "path"
-        //setItemList(fileHandler.fileImport())
+        Stage stage = (Stage) exportButton.getScene().getWindow();
+        FileChooser fileImport = new FileChooser();
+        fileImport.setTitle("Select To Do List File");
+
+        File path = fileImport.showOpenDialog(stage);
+        if (path == null)
+            return;
+
+        FileHandler fileHandler = new FileHandler(path);
+        setItemList(fileHandler.fileImport());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Todo List successfully imported!");
+        alert.show();
     }
 
     @FXML
     void onIncompleteItemsButtonClicked() {
-        //FilteredList of Items "imcompleteItems" is a new FilteredList of "items" with filter NOT getCompletedValue
-        //Set itemTable's elements to incompleteItems
+        FilteredList<Item> incompleteItems = new FilteredList<>(items, t -> ! t.getCompletedValue());
+        itemTable.setItems(incompleteItems);
     }
 
     @FXML
@@ -201,6 +225,7 @@ public class TodoListApplicationController {
 
     @FXML
     public void initialize() {
+        //Initializing table elements and number of selected items counter
         itemTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         itemTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             int count = itemTable.getSelectionModel().getSelectedItems().size();
@@ -208,6 +233,7 @@ public class TodoListApplicationController {
         }));
         itemTable.setItems(items);
 
+        //Initializes the columns and what each column contains
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
@@ -225,10 +251,19 @@ public class TodoListApplicationController {
                 newDescriptionField.setText(newDescriptionField.getText().substring(0, 256));
             }
         });
+
         newDueDateField.setConverter(converter);
     }
 
     public void createAndAddItem(String descriptionField, String dueDateField) {
+        Item item = new Item(descriptionField);
+        if (!dueDateField.equals("")) {
+            item.setDueDate(dueDateField);
+        }
+        items.add(item);
+    }
+
+    public void createAndAddItem(String descriptionField, LocalDate dueDateField) {
         Item item = new Item(descriptionField);
         if (dueDateField != null) {
             item.setDueDate(dueDateField);

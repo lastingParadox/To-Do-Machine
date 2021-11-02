@@ -15,13 +15,23 @@ public class Item {
     private String dueDate;
     private SimpleBooleanProperty completed = new SimpleBooleanProperty(false);
 
-    //Item Constructor for the GUI:
-    Item(String description, LocalDate dueDate) {
+    //Item Constructor for the Import:
+    Item(String description, String dueDate, boolean completed) {
         this.description = description;
-        this.dueDate = dueDate.toString();
+        if (dueDate.equals("null"))
+            this.dueDate = "";
+        else
+            this.dueDate = dueDate;
+        this.completed.setValue(completed);
     }
 
-    //Item Constructor for FileImport:
+    //ItemConstructor for the GUI:
+    Item(String description, LocalDate dueDate) {
+        this.description = description;
+        this.dueDate = String.valueOf(dueDate);
+    }
+
+    //Item Constructor for testing:
     Item(String description, String dueDate) {
         this.description = description;
         this.dueDate = dueDate;

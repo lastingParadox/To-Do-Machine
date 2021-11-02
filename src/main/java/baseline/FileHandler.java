@@ -5,60 +5,70 @@
 
 package baseline;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileHandler {
 
-    //private File path
-    //private List of items list
+    private File path;
+    private List<Item> list;
 
     FileHandler(File path) {
-        //this path = path
+        this.path = path;
     }
 
     FileHandler(File path, List<Item> list) {
-        //this path = path
-        //this list = list
+        this.path = path;
+        this.list = list;
     }
 
     FileHandler() {
     }
 
     public List<Item> fileImport() {
-        //List of items importList = new ArrayList
-        //Try to create a BufferedReader "reader" to read through the file provided
-            //String line = ""
+        List<Item> importList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String line = reader.readLine();
+            while(line != null) {
+                String[] info = line.split("§§");
+                Item item = new Item(info[0], info[1], Boolean.parseBoolean(info[2]));
+                importList.add(item);
+                line = reader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            //While line is not null:
-                //line = reader.readLine()
-                //Array of strings "info" = line.split(line) with delimiter "§§".
-                //New Item "item" = Item with constructors info[0], info[1], Boolean.parseBoolean(info[2])
-                //Add item to importList
-                //line = reader.readLine()
-
-        //return importList
-        return null;
+        return importList;
     }
 
     public String fileExport() {
-        //StringBuilder output = new StringBuilder
-        //Try to create a FileWriter "writer" to write to the file provided
-            //For each Item in list:
-                //Append "'item.getDescription()'§§" to output
-                //Append "'item.getDueDate()'§§" to output
-                //Append "'item.getCompletedValue'" to output
-                //Append new line to output
-            //Write output to the file
-        //return String.valueOf(Output)
-        return null;
+        StringBuilder output = new StringBuilder();
+        try (FileWriter writer = new FileWriter(path)) {
+            for (Item item : list) {
+
+                if (item != list.get(0)) {
+                    output.append(String.format("%n"));
+                }
+
+                output.append(item.getDescription()).append("§§");
+                output.append(item.getDueDate()).append("§§");
+                output.append(item.getCompletedValue());
+            }
+            writer.write(String.valueOf(output));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return String.valueOf(output);
     }
 
     public void setList(List<Item> items) {
-        //this list = list
+        list = items;
     }
 
     public void setPath(File path) {
-        //this path = path
+        this.path = path;
     }
 }
