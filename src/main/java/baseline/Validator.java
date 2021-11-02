@@ -5,6 +5,9 @@
 
 package baseline;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 public class Validator {
 
     public String verifyDescription(String description) {
@@ -15,25 +18,21 @@ public class Validator {
     }
 
     public String verifyDueDate(String dueDate) {
-        //If dueDate equals "":
-            //return dueDate
-        //tTry to parse dueDate as a LocalDate
-            //If successful:
-                //return dueDate
-            //Else:
-                //Create a new alert of type error
-                //Set the text of alert to "Due date must be a valid fate in the format "YYYY-MM-DD"".
-                //Show alert
-                //return "error"
-        return null;
+        if (dueDate.equals("")) {
+            return dueDate;
+        }
+        try {
+            LocalDate.parse(dueDate);
+            return dueDate;
+        } catch (DateTimeParseException e) {
+            return "error";
+        }
     }
 
     public void editDescription(Item item, String newDescription) {
-        //If newDescription equals "":
-            //Create a new alert of type ERROR
-            //Set content text of alert to "An item's description must be between 1 and 256 characters."
-            //Show alert
-            //Return
-        //Set item's description to verifyDescription(newDescription)
+        if (newDescription.equals(""))
+            return;
+
+        item.setDescription(verifyDescription(newDescription));
     }
 }

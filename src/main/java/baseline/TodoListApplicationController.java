@@ -12,7 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TodoListApplicationController {
@@ -55,40 +58,52 @@ public class TodoListApplicationController {
 
     private final ObservableList<Item> items = FXCollections.observableArrayList();
 
-    //Create new StringConverter of LocalDates "converter"
-        //Final DateTimeFormatter "dateFormatter" is the pattern "yyyy-MM-dd"
-        //Override toString with LocalDate "date"
-            //If "date" is not null:
-                //Return formatted date
-            //Return null
-        //Override fromString with String "string"
-            //If string is not null and is not empty:
-                //Return parsed string as LocalDate
-            //Else
-                //Return null
+    private final StringConverter<LocalDate> converter = new StringConverter<LocalDate>() {
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        @Override
+        public String toString(LocalDate date) {
+            if(date != null)
+                return dateFormatter.format(date);
+            return null;
+        }
+        @Override
+        public LocalDate fromString(String string) {
+            if (string != null && !string.isEmpty()) {
+                return LocalDate.parse(string, dateFormatter);
+            } else {
+                return null;
+            }
+        }
+    };
 
     private final Validator validator = new Validator();
 
     @FXML
     void onAddItemButtonClicked() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        //If there isn't a description provided, then shows an error and does not add the item.
         if(newDescriptionField.getText().equals("")) {
             alert.setContentText("An item's description must be between 1 and 256 characters.");
             alert.show();
             return;
         }
-        //Scenario occurs if the user is somehow able to type past 256 characters in the field
+        //Scenario occurs if the user is somehow able to type past 256 characters in the field.
+        //Shortens the description for the user and continues adding the item.
         else if (newDescriptionField.getText().length() > 256) {
             alert.setAlertType(Alert.AlertType.INFORMATION);
             alert.setContentText(String.format(
                     "An item's description must be between 1 and 256 characters.%nThe description provided has been shortened."));
             alert.show();
         }
+
         Item newItem = new Item(newDescriptionField.getText());
+
+        //As a DatePicker doesn't allow you to commit a non-date value, there's no need to validate what's entered here.
         if(newDueDateField.getValue() != null)
             newItem.setDueDate(newDueDateField.getValue());
 
         items.add(newItem);
+
         newDescriptionField.setText("");
         newDueDateField.getEditor().setText("");
         newDueDateField.setValue(null);
@@ -120,23 +135,42 @@ public class TodoListApplicationController {
 
     @FXML
     void onDescriptionColumnEdit(TableColumn.CellEditEvent<Item, String> cell) {
-        //Item "item" is the currently selected item (itemTable.getSelectionModel().getSelectedItem)
-        //validator.editDescription(item, cell.getNewValue())
-        //Refresh itemTable()
+        Item item = itemTable.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        if(cell.getNewValue().equals("")) {
+            alert.setContentText("An item's description must be between 1 and 256 characters.");
+            alert.show();
+            itemTable.refresh();
+            return;
+        }
+        else if (cell.getNewValue().length() > 256) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            alert.setContentText(String.format(
+                    "An item's description must be between 1 and 256 characters.%nThe description provided has been shortened."));
+            alert.show();
+        }
+        validator.editDescription(item, cell.getNewValue());
     }
 
     @FXML
     void onDescriptionFieldFill() {
+        //If the user commits the field before adding an item, verifies the field.
         newDescriptionField.setText(validator.verifyDescription(newDescriptionField.getText()));
     }
 
     @FXML
     void onDueDateColumnEdit(TableColumn.CellEditEvent<Item, String> cell) {
-        //Item "item" is the currently selected item
-        //If validator.verifyDueDate(cell.getNewValue()) does not equal "error":
-            //Set item's dueDate to cell.getNewValue()
-        //Else
-            //Refresh the itemTable
+        Item item = itemTable.getSelectionModel().getSelectedItem();
+        if(!validator.verifyDueDate(cell.getNewValue()).equals("error"))
+            item.setDueDate(cell.getNewValue());
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Due Date must be a valid date in the format \"YYYY-MM-DD\".");
+            alert.show();
+            itemTable.refresh();
+        }
+
     }
 
     @FXML
@@ -189,6 +223,7 @@ public class TodoListApplicationController {
         completedColumn.setCellValueFactory(param -> param.getValue().getCompleted());
         completedColumn.setCellFactory(column -> new CheckBoxTableCell<>());
 
+        //Sets the character counter and refuses the user the ability to type past 256 characters in the field
         newDescriptionField.textProperty().addListener((observable, oldValue, newValue) -> {
             descriptionCharCounter.setText(
                     String.format("Current: %d characters", newDescriptionField.getText().length()));
@@ -196,7 +231,7 @@ public class TodoListApplicationController {
                 newDescriptionField.setText(newDescriptionField.getText().substring(0, 256));
             }
         });
-        //newDueDateField.setConverter(converter);
+        newDueDateField.setConverter(converter);
     }
 
     public void createAndAddItem(String descriptionField, String dueDateField) {

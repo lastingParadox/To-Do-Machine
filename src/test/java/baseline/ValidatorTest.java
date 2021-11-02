@@ -18,49 +18,58 @@ class ValidatorTest {
     }
 
     @Test
-    void verifyDueDateTestNull() {
-        //String expected = ""
-        //String actual = test.verifyDueDate("")
+    void verifyDescriptionTestNull() {
+        String testString = "";
+        String expected = "";
+        String actual = test.verifyDescription(testString);
 
-        //AssertEquals(expected, actual)
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void verifyDueDateTestNull() {
+        String expected = "";
+        String actual = test.verifyDueDate("");
+
+        assertEquals(expected, actual);
     }
 
     @Test
     void verifyDueDateTestSuccess() {
-        //String expected = "2021-12-10"
-        //String actual = test.verifyDueDate("2021-12-10")
+        String expected = "2021-12-10";
+        String actual = test.verifyDueDate("2021-12-10");
 
-        //AssertEquals(expected, actual)
+        assertEquals(expected, actual);
     }
 
     @Test
     void verifyDueDateTestError() {
-        //String expected = "error"
-        //String actual = test.verifyDueDate("bruh")
+        String expected = "error";
+        String actual = test.verifyDueDate("bruh");
 
-        //AssertEquals(expected, actual)
+        assertEquals(expected, actual);
     }
 
     @Test
     void editDescriptionTestSuccess() {
-        //Item testItem is a new item with constructors "Do Something", "2021-10-31"
-        //test.editDescription(testItem, "verify editDescription")
+        Item testItem = new Item("Do Something", "2021-10-31");
+        test.editDescription(testItem, "Verify editDescription");
 
-        //String expected = "verify editDescription"
-        //String actual = testItem.getDescription()
+        String expected = "Verify editDescription";
+        String actual = testItem.getDescription();
 
-        //AssertEquals(expected, actual)
+        assertEquals(expected, actual);
     }
 
     @Test
     void editDescriptionTestNull() {
-        //Item testItem is a new item with constructors "Do Something", "2021-10-31"
-        //test.editDescription(testItem, "")
+        Item testItem = new Item("Do Something", "2021-10-31");
+        test.editDescription(testItem, "");
 
-        //String expected = "Do Something"
-        //String actual = testItem.getDescription()
+        String expected = "Do Something";
+        String actual = testItem.getDescription();
 
-        //AssertEquals(expected, actual)
+        assertEquals(expected, actual);
     }
 
 }

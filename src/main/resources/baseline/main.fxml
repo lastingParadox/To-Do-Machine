@@ -16,9 +16,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.TodoListApplicationController">
+<FlowPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.TodoListApplicationController">
     <children>
-        <MenuBar maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="750.0">
+        <MenuBar maxHeight="25.0" maxWidth="1.7976931348623157E308" minWidth="50.0" prefHeight="25.0" prefWidth="750.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -33,7 +33,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <VBox prefHeight="375.0" prefWidth="200.0">
+        <VBox layoutY="26.0" maxHeight="1.7976931348623157E308" maxWidth="200.0" minHeight="425.0" minWidth="200.0" prefHeight="375.0" prefWidth="200.0">
             <children>
                 <Label alignment="CENTER" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="136.0" prefWidth="200.0" text="To-Do Machine">
                     <VBox.margin>
