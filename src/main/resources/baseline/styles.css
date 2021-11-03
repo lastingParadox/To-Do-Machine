@@ -1,5 +1,29 @@
+* {
+    -fx-secondary-color: #29554a;
+}
+
 #body {
-    -fx-background-color: #1C2D28;
+    -fx-background-color: #1c2d28;
+}
+
+.context-menu {
+    -fx-background-color: black;
+}
+
+.menu-bar {
+    -fx-background-color: #1a2621;
+    -fx-border-color: -fx-secondary-color;
+}
+
+.menu-bar > .container > .menu-button:hover,
+.menu-bar > .container > .menu-button:focused,
+.menu-bar > .container > .menu-button:showing {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.menu-item:focused,
+.menu-item:hover {
+    -fx-background-color: -fx-secondary-color;
 }
 
 #master {
@@ -8,24 +32,69 @@
 
 .label {
     -fx-font-family: "Century Gothic";
-    -fx-text-fill: #D2D2D2;
+    -fx-text-fill: #d2d2d2;
     -fx-font-weight: 700;
 }
 
 #mastertitle {
-    -fx-border-radius: 0 50 0 50;
-    -fx-border-width: 3px;
-    -fx-border-color: #2F5D51;
+    -fx-font-family: "Orbitron";
+    -fx-font-size: 20px;
+    -fx-background-image: url("master-title-border.png");
+}
+
+.table-view {
+    -fx-background-color: rgba(7, 11, 9, 0.8);
+    -fx-border-width: 1px;
+    -fx-border-color: -fx-secondary-color;
+    -fx-text-alignment: center;
+}
+
+.table-view .column-header {
+    -fx-background-color: #19241f;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.table-view .table-cell {
+    -fx-font-size: 14px;
+    -fx-text-fill: #d2d2d2;
+    -fx-font-family: "Century Gothic";
+    -fx-border-color: -fx-secondary-color;
+    -fx-border-style: solid none none none;
+    -fx-background-color: #121b19;
+    -fx-alignment: center;
+    -fx-padding: 2 0 2 10px;
+}
+
+.text-field {
+    -fx-font-family: "Century Gothic";
+    -fx-padding: 1;
+    -fx-border-color: -fx-secondary-color;
+    -fx-background-color: #070b09;
+    -fx-alignment: center;
+    -fx-text-fill: #d2d2d2;
+}
+.table-cell:focused {
+    -fx-padding: 0;
 }
 
 .button {
     -fx-font-family: "Century Gothic";
     -fx-font-weight: 700;
     -fx-text-alignment: center;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.8), 0, 0.0, 0, 1);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.8), 0, 0, 0, 1);
     -fx-background-insets: 1, 1, 1, 1;
     -fx-background-radius: 0, 0, 0, 0;
-    -fx-background-color: #1C2D28;
-    -fx-border-color: #2F5D51;
-    -fx-text-fill: #D2D2D2;
+    -fx-background-color: #1c2d28;
+    -fx-border-color: -fx-secondary-color;
+    -fx-text-fill: #d2d2d2;
+}
+
+#clearbutton {
+    -fx-text-fill: #D6493C;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: -fx-secondary-color;
+    -fx-background-radius: 0;
 }
