@@ -74,7 +74,8 @@ public class Item {
         this.dueDate = dueDate.toString();
     }
 
-    public void setCompleted(SimpleBooleanProperty completed) {
-        this.completed = completed;
+    public void setCompleted(boolean completed) {
+        this.completed.setValue(completed);
     }
+
 }

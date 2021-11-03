@@ -32,7 +32,12 @@ public class FileHandler {
             String line = reader.readLine();
             while(line != null) {
                 String[] info = line.split("§§");
-                Item item = new Item(info[0], info[1], Boolean.parseBoolean(info[2]));
+
+                Item item = new Item(info[0]);
+                if(!info[1].equals("null"))
+                    item.setDueDate(info[1]);
+                item.setCompleted(Boolean.parseBoolean(info[2]));
+
                 importList.add(item);
                 line = reader.readLine();
             }

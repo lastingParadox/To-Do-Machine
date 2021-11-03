@@ -20,13 +20,10 @@ import javafx.util.StringConverter;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 public class TodoListApplicationController {
-
-    @FXML private Button addItemButton;
-
-    @FXML private Button clearItemButton;
 
     @FXML private TableColumn<Item, Boolean> completedColumn;
 
@@ -38,11 +35,7 @@ public class TodoListApplicationController {
 
     @FXML private Button exportButton;
 
-    @FXML private MenuItem exportMenu;
-
     @FXML private Button importButton;
-
-    @FXML private MenuItem importMenu;
 
     @FXML private TableView<Item> itemTable;
 
@@ -50,15 +43,7 @@ public class TodoListApplicationController {
 
     @FXML private DatePicker newDueDateField;
 
-    @FXML private Button removeItemButton;
-
     @FXML private Label selectedItemCounter;
-
-    @FXML private Button showAllItemsButton;
-
-    @FXML private Button showCompleteItemsButton;
-
-    @FXML private Button showIncompleteItemsButton;
 
     private final ObservableList<Item> items = FXCollections.observableArrayList();
 
@@ -134,6 +119,11 @@ public class TodoListApplicationController {
     }
 
     @FXML
+    void onDateSortButtonClicked() {
+        sortByDate();
+    }
+
+    @FXML
     void onDescriptionColumnEdit(TableColumn.CellEditEvent<Item, String> cell) {
         //Creates alerts if description is over 256 characters or is empty
         //If not empty, sets the description to a provided description less than 256 characters.
@@ -180,6 +170,10 @@ public class TodoListApplicationController {
         Stage stage = (Stage) importButton.getScene().getWindow();
         FileChooser fileExport = new FileChooser();
         fileExport.setTitle("Export To Do List File");
+        fileExport.setInitialDirectory(new File("./TodoLists"));
+        fileExport.setInitialFileName("NewList.txt");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Text files", "*.txt");
+        fileExport.getExtensionFilters().add(filter);
 
         File path = fileExport.showSaveDialog(stage);
         if (path == null)
@@ -198,6 +192,9 @@ public class TodoListApplicationController {
         Stage stage = (Stage) exportButton.getScene().getWindow();
         FileChooser fileImport = new FileChooser();
         fileImport.setTitle("Select To Do List File");
+        fileImport.setInitialDirectory(new File("./TodoLists"));
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Text files", "*.txt");
+        fileImport.getExtensionFilters().add(filter);
 
         File path = fileImport.showOpenDialog(stage);
         if (path == null)
@@ -286,5 +283,17 @@ public class TodoListApplicationController {
     public void setItemList(List<Item> newItemList) {
         items.clear();
         items.addAll(newItemList);
+    }
+
+    public void sortByDate() {
+        items.sort((o1, o2) -> {
+            if (o1.getDueDate() == null) {
+                return (o2.getDueDate() == null) ? 0 : 1;
+            }
+            if (o2.getDueDate() == null) {
+                return -1;
+            }
+            return o1.getDueDate().compareTo(o2.getDueDate());
+        });
     }
 }

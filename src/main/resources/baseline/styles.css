@@ -1,4 +1,31 @@
+#body {
+    -fx-background-color: #1C2D28;
+}
+
+#master {
+    -fx-background-image: url("hexa-small.png");
+}
+
 .label {
-    -fx-text-fill: black;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #D2D2D2;
     -fx-font-weight: 700;
+}
+
+#mastertitle {
+    -fx-border-radius: 0 50 0 50;
+    -fx-border-width: 3px;
+    -fx-border-color: #2F5D51;
+}
+
+.button {
+    -fx-font-family: "Century Gothic";
+    -fx-font-weight: 700;
+    -fx-text-alignment: center;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.8), 0, 0.0, 0, 1);
+    -fx-background-insets: 1, 1, 1, 1;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-background-color: #1C2D28;
+    -fx-border-color: #2F5D51;
+    -fx-text-fill: #D2D2D2;
 }

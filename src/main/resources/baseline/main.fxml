@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -16,14 +15,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.TodoListApplicationController">
+<FlowPane id="body" prefHeight="475.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.TodoListApplicationController">
     <children>
         <MenuBar maxHeight="25.0" maxWidth="1.7976931348623157E308" minWidth="50.0" prefHeight="25.0" prefWidth="750.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="importMenu" mnemonicParsing="false" onAction="#onImportButtonClicked" text="Import" />
-                        <MenuItem fx:id="exportMenu" mnemonicParsing="false" onAction="#onExportButtonClicked" text="Export" />
+                        <MenuItem mnemonicParsing="false" onAction="#onImportButtonClicked" text="Import" />
+                        <MenuItem mnemonicParsing="false" onAction="#onExportButtonClicked" text="Export" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -33,9 +32,9 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <VBox layoutY="26.0" maxHeight="1.7976931348623157E308" maxWidth="200.0" minHeight="425.0" minWidth="200.0" prefHeight="375.0" prefWidth="200.0">
+        <VBox id="master" layoutY="26.0" maxHeight="1.7976931348623157E308" maxWidth="200.0" minHeight="425.0" minWidth="200.0" prefHeight="375.0" prefWidth="200.0">
             <children>
-                <Label alignment="CENTER" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="136.0" prefWidth="200.0" text="To-Do Machine">
+                <Label id="mastertitle" alignment="CENTER" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="136.0" prefWidth="200.0" text="To-Do Machine">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
@@ -43,10 +42,9 @@
                         <Font name="Bauhaus 93" size="24.0" />
                     </font>
                 </Label>
-                <Separator prefWidth="200.0" />
                 <Button fx:id="importButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onImportButtonClicked" prefHeight="25.0" prefWidth="202.0" text="Import To-Do List">
                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" top="5.0" />
+                        <Insets left="5.0" right="5.0" top="10.0" />
                     </VBox.margin>
                 </Button>
                 <Button fx:id="exportButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onExportButtonClicked" prefHeight="25.0" prefWidth="196.0" text="Export Selected To-Do List">
@@ -54,7 +52,7 @@
                         <Insets left="5.0" right="5.0" top="15.0" />
                     </VBox.margin>
                 </Button>
-                <Button fx:id="removeItemButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRemoveButtonClicked" prefHeight="25.0" prefWidth="195.0" text="Remove Selected Items">
+                <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRemoveButtonClicked" prefHeight="25.0" prefWidth="195.0" text="Remove Selected Items">
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>
@@ -62,7 +60,7 @@
                         <Insets left="5.0" right="5.0" top="30.0" />
                     </VBox.margin>
                 </Button>
-                <Button fx:id="clearItemButton" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClearButtonClicked" prefHeight="25.0" prefWidth="195.0" text="CLEAR ALL ITEMS" textFill="RED">
+                <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClearButtonClicked" prefHeight="25.0" prefWidth="195.0" text="CLEAR ALL ITEMS" textFill="RED">
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>
@@ -72,11 +70,10 @@
                 </Button>
             </children>
         </VBox>
-        <Separator maxHeight="1.7976931348623157E308" orientation="VERTICAL" prefHeight="425.0" prefWidth="5.0" />
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="425.0" prefWidth="539.0">
+        <VBox maxWidth="1.7976931348623157E308" prefWidth="539.0">
             <children>
                 <Label fx:id="selectedItemCounter" text="Number of Selected Items: 0" />
-                <TableView fx:id="itemTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="464.0" prefWidth="534.0">
+                <TableView fx:id="itemTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="534.0">
                     <columns>
                         <TableColumn fx:id="completedColumn" prefWidth="75.0" text="Completed" />
                         <TableColumn fx:id="descriptionColumn" onEditCommit="#onDescriptionColumnEdit" prefWidth="365.0" text="Description" />
@@ -86,22 +83,27 @@
                         <Insets bottom="5.0" right="10.0" />
                     </VBox.margin>
                 </TableView>
-                <HBox prefHeight="100.0" prefWidth="200.0">
+            <Button mnemonicParsing="false" onAction="#onDateSortButtonClicked" text="Sort Items By Date">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Button>
+                <HBox prefHeight="25.0" prefWidth="200.0">
                     <children>
-                        <Button fx:id="showAllItemsButton" mnemonicParsing="false" onAction="#onAllItemsButtonClicked" prefHeight="25.0" prefWidth="98.0" text="Show All Items">
+                        <Button mnemonicParsing="false" onAction="#onAllItemsButtonClicked" prefHeight="25.0" prefWidth="98.0" text="Show All Items">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="showCompleteItemsButton" mnemonicParsing="false" onAction="#onCompleteItemsButtonClicked" text="Show Only Completed Items">
+                        <Button mnemonicParsing="false" onAction="#onCompleteItemsButtonClicked" text="Show Only Completed Items">
                             <HBox.margin>
                                 <Insets right="20.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="showIncompleteItemsButton" mnemonicParsing="false" onAction="#onIncompleteItemsButtonClicked" text="Show Only Incomplete Items" />
+                        <Button mnemonicParsing="false" onAction="#onIncompleteItemsButtonClicked" text="Show Only Incomplete Items" />
                     </children>
                 </HBox>
-                <VBox prefHeight="75.0" prefWidth="534.0">
+                <VBox>
                     <children>
                         <Label text="Create New Item:" underline="true">
                             <VBox.margin>
@@ -116,7 +118,7 @@
                                         <Insets left="5.0" />
                                     </HBox.margin>
                                 </DatePicker>
-                                <Button fx:id="addItemButton" alignment="CENTER" mnemonicParsing="false" onAction="#onAddItemButtonClicked" prefHeight="25.0" prefWidth="77.0" text="Add Item">
+                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#onAddItemButtonClicked" prefHeight="25.0" prefWidth="77.0" text="Add Item">
                                     <HBox.margin>
                                         <Insets left="5.0" />
                                     </HBox.margin>
@@ -126,7 +128,7 @@
                                 <Insets right="5.0" top="5.0" />
                             </VBox.margin>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="17.0" prefWidth="200.0">
                             <children>
                                 <HBox prefHeight="17.0" prefWidth="287.0">
                                     <children>
