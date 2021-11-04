@@ -1,9 +1,13 @@
 * {
+    -fx-primary-color: #1c2d28;
     -fx-secondary-color: #29554a;
+    -fx-text-color: #d2d2d2;
+    -fx-header-color: #19241f;
+    -fx-select-color: #6CFFE0;
 }
 
 #body {
-    -fx-background-color: #1c2d28;
+    -fx-background-color: -fx-primary-color;
 }
 
 .context-menu {
@@ -11,7 +15,7 @@
 }
 
 .menu-bar {
-    -fx-background-color: #1a2621;
+    -fx-background-color: -fx-header-color;
     -fx-border-color: -fx-secondary-color;
 }
 
@@ -30,9 +34,23 @@
     -fx-background-image: url("hexa-small.png");
 }
 
+#master .button {
+    -fx-background-color: rgba(0,0,0,0.2);
+    -fx-border-color: linear-gradient(to bottom right, #373E7f, #972653);
+}
+
+#master .button:hover {
+    -fx-border-color: rgba(243, 143, 87, 0.6);
+    -fx-background-color: rgba(79, 57, 38, 0.25);
+}
+
+#master .button:pressed {
+    -fx-border-color: -fx-select-color;
+}
+
 .label {
     -fx-font-family: "Century Gothic";
-    -fx-text-fill: #d2d2d2;
+    -fx-text-fill: -fx-text-color;
     -fx-font-weight: 700;
 }
 
@@ -50,20 +68,27 @@
 }
 
 .table-view .column-header {
-    -fx-background-color: #19241f;
+    -fx-background-color: -fx-header-color;
     -fx-text-alignment: center;
     -fx-alignment: center;
 }
 
 .table-view .table-cell {
     -fx-font-size: 14px;
-    -fx-text-fill: #d2d2d2;
+    -fx-text-fill: -fx-text-color;
     -fx-font-family: "Century Gothic";
     -fx-border-color: -fx-secondary-color;
     -fx-border-style: solid none none none;
-    -fx-background-color: #121b19;
     -fx-alignment: center;
-    -fx-padding: 2 0 2 10px;
+}
+
+.table-row-cell {
+    -fx-background-color: #121b19;
+}
+
+.table-row-cell:selected {
+    -fx-border-color: -fx-select-color;
+    -fx-padding: 0 0 0 0;
 }
 
 .text-field {
@@ -72,10 +97,21 @@
     -fx-border-color: -fx-secondary-color;
     -fx-background-color: #070b09;
     -fx-alignment: center;
-    -fx-text-fill: #d2d2d2;
+    -fx-text-fill: -fx-text-color;
 }
-.table-cell:focused {
-    -fx-padding: 0;
+
+.check-box .box {
+    -fx-background-color: -fx-primary-color;
+    -fx-border-color: -fx-secondary-color;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: -fx-select-color;
+}
+
+.check-box:hover {
+    -fx-border-color: #F38F57;
+    -fx-background-color: #4F3926;
 }
 
 .button {
@@ -85,9 +121,18 @@
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.8), 0, 0, 0, 1);
     -fx-background-insets: 1, 1, 1, 1;
     -fx-background-radius: 0, 0, 0, 0;
-    -fx-background-color: #1c2d28;
+    -fx-background-color: -fx-primary-color;
     -fx-border-color: -fx-secondary-color;
-    -fx-text-fill: #d2d2d2;
+    -fx-text-fill: -fx-text-color;
+}
+
+.button:hover {
+    -fx-border-color: #F38F57;
+    -fx-background-color: #4F3926;
+}
+
+.button:pressed {
+    -fx-border-color: -fx-select-color;
 }
 
 #clearbutton {
@@ -95,6 +140,23 @@
 }
 
 .date-picker .arrow-button {
-    -fx-background-color: -fx-secondary-color;
+    -fx-background-color: -fx-primary-color;
     -fx-background-radius: 0;
 }
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: -fx-text-color;
+}
+
+.date-picker {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.date-picker-popup {
+    -fx-border-color: -fx-secondary-color;
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-background-color: -fx-primary-color;
+}
+
