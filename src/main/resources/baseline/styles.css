@@ -19,9 +19,9 @@
     -fx-border-color: -fx-secondary-color;
 }
 
-.menu-bar > .container > .menu-button:hover,
-.menu-bar > .container > .menu-button:focused,
-.menu-bar > .container > .menu-button:showing {
+.menu-bar>.container>.menu-button:hover,
+.menu-bar>.container>.menu-button:focused,
+.menu-bar>.container>.menu-button:showing {
     -fx-background-color: -fx-secondary-color;
 }
 
@@ -35,7 +35,7 @@
 }
 
 #master .button {
-    -fx-background-color: rgba(0,0,0,0.2);
+    -fx-background-color: rgba(0, 0, 0, 0.2);
     -fx-border-color: linear-gradient(to bottom right, #373E7f, #972653);
 }
 
@@ -48,6 +48,10 @@
     -fx-border-color: -fx-select-color;
 }
 
+#master .list-view {
+    -fx-background-color: transparent;
+}
+
 .label {
     -fx-font-family: "Century Gothic";
     -fx-text-fill: -fx-text-color;
@@ -58,6 +62,13 @@
     -fx-font-family: "Orbitron";
     -fx-font-size: 20px;
     -fx-background-image: url("master-title-border.png");
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-color;
+    -fx-cell-size: 25px;
+    -fx-alignment: center;
 }
 
 .table-view {
@@ -84,10 +95,12 @@
 
 .table-row-cell {
     -fx-background-color: #121b19;
+    -fx-cell-size: 30px;
 }
 
-.table-row-cell:selected {
-    -fx-border-color: -fx-select-color;
+.table-row-cell:selected, .list-cell:selected {
+    -fx-background-color: -fx-select-color, #121b19;
+    -fx-background-insets: 0, 2 1 1 1;
     -fx-padding: 0 0 0 0;
 }
 
@@ -159,4 +172,3 @@
 .date-picker-popup .month-year-pane {
     -fx-background-color: -fx-primary-color;
 }
-

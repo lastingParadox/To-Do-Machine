@@ -13,7 +13,7 @@ public class Item {
 
     private String description;
     private String dueDate;
-    private SimpleBooleanProperty completed = new SimpleBooleanProperty(false);
+    private final SimpleBooleanProperty completed = new SimpleBooleanProperty(false);
 
     //Item Constructor for the Import:
     Item(String description, String dueDate, boolean completed) {

@@ -22,7 +22,7 @@
             <MenuItem mnemonicParsing="false" onAction="#onExportButtonClicked" text="Export" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" text="About" />
+            <MenuItem mnemonicParsing="false" onAction="#onAboutButtonClicked" text="About" />
         </Menu>
     </MenuBar>
     <VBox id="master" layoutY="26.0" maxHeight="1.7976931348623157E308" maxWidth="200.0" minHeight="425.0" minWidth="200.0" prefHeight="375.0" prefWidth="200.0">

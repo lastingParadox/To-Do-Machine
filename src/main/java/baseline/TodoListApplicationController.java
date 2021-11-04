@@ -9,6 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,10 +21,12 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TodoListApplicationController {
 
@@ -47,7 +52,7 @@ public class TodoListApplicationController {
 
     private final ObservableList<Item> items = FXCollections.observableArrayList();
 
-    private final StringConverter<LocalDate> converter = new StringConverter<LocalDate>() {
+    private final StringConverter<LocalDate> converter = new StringConverter<>() {
         final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         @Override
         public String toString(LocalDate date) {
@@ -66,6 +71,19 @@ public class TodoListApplicationController {
     };
 
     private final Validator validator = new Validator();
+
+    @FXML
+    void onAboutButtonClicked() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("about.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle("About");
+        stage.show();
+    }
 
     @FXML
     void onAddItemButtonClicked() {
