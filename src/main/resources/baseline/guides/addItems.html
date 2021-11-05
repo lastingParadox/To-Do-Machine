@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Adding Items</title>
+        <!--link rel="stylesheet" href="style.css"-->
+    </head>
+    <body style="margin-right: 2em;">
+        <h1>Adding Items</h1>
+        <p>Adding items in To-Do Machine is a simple and straightforward task, allowing the user to input a list item's description and date into their to-do list.</p>
+        <ul>
+            <li><a href="#location">Where Do I Add an Item?</a></li>
+            <ul>
+                <li><a href="#description">Description</a></li>
+                <li><a href="#duedate">Due Date</a></li>
+            </ul>
+            <li><a href="#additem">Adding the Item</a></li>
+        </ul>
+        <h2 id="location">Where Do I Add an Item?</h2>
+        <p>In the bottom center of To-Do-Machine, there is a section titled, "Create New Item". In that section there are two textboxes to fill: a mandatory Description field and an optional Due Date field.</p>
+
+        <h3 id="description">Description</h3>
+        <p>An item's description is a 1 to 256 character moniker used to denote what the user wants to do for that item. By typing into the Description field, the user is effectively naming the item and preparing it to be entered in their to-do list.</p>
+        <p style="color: red">WARNING: AN ITEM CANNOT BE CREATED WITHOUT A DESCRIPTION.</p>
+
+        <h3 id="duedate">Due Date</h3>
+        <p>An item's due date is an optional field used to allow the user to set a time for when the item should be completed by. The due date is always displayed in the format "YYYY-MM-DD", or "year-month-day", and must be entered as such for the program to include it within the item. The due date can also be selected by clicking on the calendar icon next to the field for ease of access.</p>
+        <p style="color: red">WARNING: AN ITEM'S DUE DATE WILL NOT DISPLAY IF THE USER DOES NOT PRESS ENTER AFTER THE DATE IS TYPED IN OR IF THE USER DOES NOT PUT A VALID DATE.</p>
+
+        <h2 id="additem">Adding the Item</h2>
+        <p>Upon filling out the Description field, the user can add an item to the to-do list by clicking the "Add Item" button to the right of the Due Date field. Provided that the user typed in a value that is within 1 to 256 characters, the item will be added to the bottom of the to-do list without errors.</p> 
+        <p>The new item in the to-do list is displayed in the table above it with the headers "Completed", "Description", and "Due Date", with the description and due date provided being entered into their respective cells for the item. The "Completed" checkbox will always remain unchecked for a newly added item, and can be marked as completed by clicking on the checkbox.</p>
+        
+    </body>
+</html>
