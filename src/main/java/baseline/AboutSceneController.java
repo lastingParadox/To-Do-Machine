@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 1 Solution
+ *  Copyright 2021 Zander Preston
+ */
+
 package baseline;
 
 import javafx.collections.FXCollections;
@@ -12,15 +17,14 @@ import java.util.Objects;
 
 public class AboutSceneController {
 
-    @FXML
-    private ListView<Guide> guideList;
+    @FXML private ListView<Guide> guideList;
 
-    @FXML
-    private WebView guideView;
+    @FXML private WebView guideView;
 
     private WebEngine engine;
 
     private final ObservableList<Guide> list = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
         list.addAll(new Guide("Adding Items", "addItems.html"),

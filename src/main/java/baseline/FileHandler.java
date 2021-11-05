@@ -7,6 +7,7 @@ package baseline;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FileHandler {
@@ -43,6 +44,8 @@ public class FileHandler {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return Collections.emptyList();
         }
 
         return importList;

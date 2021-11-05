@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 1 Solution
+ *  Copyright 2021 Zander Preston
+ */
+
 package baseline;
 
 import org.junit.jupiter.api.Test;
@@ -7,15 +12,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TodoListApplicationControllerTest {
+class ItemListTest {
 
-    TodoListApplicationController test = new TodoListApplicationController();
+    ItemList test = new ItemList();
 
     @Test
     void createAndAddItemTest() {
         test.createAndAddItem("Test Description", "");
 
-        List<Item> actualList = test.getItemList();
+        List<Item> actualList = test.getList();
 
         String expected = "Test Description";
         String actual = actualList.get(0).getDescription();
@@ -27,7 +32,7 @@ class TodoListApplicationControllerTest {
     void createAndAddItemTestDate() {
         test.createAndAddItem("Test Description", "2021-10-31");
 
-        List<Item> actualList = test.getItemList();
+        List<Item> actualList = test.getList();
 
         String expected = "2021-10-31";
         String actual = actualList.get(0).getDueDate();
@@ -43,7 +48,7 @@ class TodoListApplicationControllerTest {
 
         test.setItemList(expected);
 
-        List<Item> actual = test.getItemList();
+        List<Item> actual = test.getList();
 
         assertEquals(actual, expected);
     }
@@ -62,7 +67,7 @@ class TodoListApplicationControllerTest {
         items.remove(1);
         test.removeSelectedItems(items);
 
-        List<Item> actual = test.getItemList();
+        List<Item> actual = test.getList();
 
         assertEquals(expected, actual);
     }
@@ -79,7 +84,7 @@ class TodoListApplicationControllerTest {
 
         List<Item> expected = new ArrayList<>();
 
-        List<Item> actual = test.getItemList();
+        List<Item> actual = test.getList();
 
         assertEquals(expected, actual);
     }

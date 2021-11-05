@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 1 Solution
+ *  Copyright 2021 Zander Preston
+ */
+
 package baseline;
 
 public class Guide {
@@ -7,10 +12,6 @@ public class Guide {
     Guide(String title, String localHtml) {
         this.title = title;
         this.localHtml = localHtml;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getLocalHtml() {

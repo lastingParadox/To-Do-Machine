@@ -5,8 +5,6 @@
 
 package baseline;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +48,7 @@ public class TodoListApplicationController {
 
     @FXML private Label selectedItemCounter;
 
-    private final ObservableList<Item> items = FXCollections.observableArrayList();
+    private final ItemList items = new ItemList();
 
     private final StringConverter<LocalDate> converter = new StringConverter<>() {
         final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -103,7 +101,7 @@ public class TodoListApplicationController {
             alert.show();
         }
 
-        createAndAddItem(newDescriptionField.getText(), newDueDateField.getValue());
+        items.createAndAddItem(newDescriptionField.getText(), newDueDateField.getValue());
 
         newDescriptionField.setText("");
         newDueDateField.getEditor().setText("");
@@ -112,7 +110,7 @@ public class TodoListApplicationController {
 
     @FXML
     void onAllItemsButtonClicked() {
-        itemTable.setItems(items);
+        itemTable.setItems(items.getList());
     }
 
     @FXML
@@ -126,24 +124,24 @@ public class TodoListApplicationController {
         alert.getButtonTypes().setAll(yes, no);
         alert.showAndWait().ifPresent(type -> {
             if (type == yes)
-                clear();
+                items.clear();
         });
     }
 
     @FXML
     void onCompleteItemsButtonClicked() {
-        FilteredList<Item> completeItems = new FilteredList<>(items, Item::getCompletedValue);
+        FilteredList<Item> completeItems = new FilteredList<>(items.getList(), Item::getCompletedValue);
         itemTable.setItems(completeItems);
     }
 
     @FXML
     void onDateSortButtonClicked() {
-        sortByDate();
+        items.sortByDate();
     }
 
     @FXML
     void onDescriptionColumnEdit(TableColumn.CellEditEvent<Item, String> cell) {
-        //Creates alerts if description is over 256 characters or is empty
+        //Creates alert if description is over 256 characters or is empty
         //If not empty, sets the description to a provided description less than 256 characters.
         Item item = itemTable.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -197,7 +195,7 @@ public class TodoListApplicationController {
         if (path == null)
             return;
 
-        FileHandler fileHandler = new FileHandler(path, items);
+        FileHandler fileHandler = new FileHandler(path, items.getList());
         fileHandler.fileExport();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -219,23 +217,32 @@ public class TodoListApplicationController {
             return;
 
         FileHandler fileHandler = new FileHandler(path);
-        setItemList(fileHandler.fileImport());
+
+        List<Item> importedList = fileHandler.fileImport();
+        if (importedList.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("To Do List failed to import.");
+            alert.show();
+            return;
+        }
+
+        items.setItemList(importedList);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Todo List successfully imported!");
+        alert.setContentText("To Do List successfully imported!");
         alert.show();
     }
 
     @FXML
     void onIncompleteItemsButtonClicked() {
-        FilteredList<Item> incompleteItems = new FilteredList<>(items, t -> ! t.getCompletedValue());
+        FilteredList<Item> incompleteItems = new FilteredList<>(items.getList(), t -> ! t.getCompletedValue());
         itemTable.setItems(incompleteItems);
     }
 
     @FXML
     void onRemoveButtonClicked() {
         //Items to be removed are the currently selected items in the table.
-        removeSelectedItems(itemTable.getSelectionModel().getSelectedItems());
+        items.removeSelectedItems(itemTable.getSelectionModel().getSelectedItems());
     }
 
     @FXML
@@ -246,7 +253,7 @@ public class TodoListApplicationController {
             int count = itemTable.getSelectionModel().getSelectedItems().size();
             selectedItemCounter.setText(String.format("Number of Selected Items: %d", count));
         }));
-        itemTable.setItems(items);
+        itemTable.setItems(items.getList());
 
         //Initializes the columns and what each column contains
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -268,50 +275,5 @@ public class TodoListApplicationController {
         });
 
         newDueDateField.setConverter(converter);
-    }
-
-    public void createAndAddItem(String descriptionField, String dueDateField) {
-        Item item = new Item(descriptionField);
-        if (!dueDateField.equals("")) {
-            item.setDueDate(dueDateField);
-        }
-        items.add(item);
-    }
-
-    public void createAndAddItem(String descriptionField, LocalDate dueDateField) {
-        Item item = new Item(descriptionField);
-        if (dueDateField != null) {
-            item.setDueDate(dueDateField);
-        }
-        items.add(item);
-    }
-
-    public void removeSelectedItems(List<Item> removedItems) {
-        items.removeAll(removedItems);
-    }
-
-    public void clear() {
-        items.clear();
-    }
-
-    public List<Item> getItemList() {
-        return items;
-    }
-
-    public void setItemList(List<Item> newItemList) {
-        items.clear();
-        items.addAll(newItemList);
-    }
-
-    public void sortByDate() {
-        items.sort((o1, o2) -> {
-            if (o1.getDueDate() == null) {
-                return (o2.getDueDate() == null) ? 0 : 1;
-            }
-            if (o2.getDueDate() == null) {
-                return -1;
-            }
-            return o1.getDueDate().compareTo(o2.getDueDate());
-        });
     }
 }

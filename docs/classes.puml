@@ -7,36 +7,28 @@ class TodoListApplication {
 
 class TodoListApplicationController {
     ..@FXML Variables..
-    -Button addItemButton
-    -Button clearItemButton
     -TableColumn<Item, Boolean> completedColumn
     -TableColumn<Item, String> descriptionColumn
     -Label descriptionCharCounter
     -TableColumn<Item, String> dueDateColumn
     -Button exportButton
-    -MenuItem exportMenu
     -Button importButton
-    -MenuItem importMenu
     -TableView<Item> itemTable
-    -TextField newDescriptionField
-    -DatePicker newDueDateField
-    -Button removeItemButton
-    -Label selectedItemCounter
-    -Button showAllItemsButton
-    -Button showCompleteItemsButton
-    -Button showIncompleteItemsButton
+    -private TextField newDescriptionField
+    -private DatePicker newDueDateField
+    -private Label selectedItemCounter
     ..Other Variables..
-    -ObservableList items
+    -ItemList items
     -StringConverter<LocalDate> converter
     -Validator validator
     --
     ..@FXML Methods..
+    void onAboutButtonClicked()
     void onAddItemButtonClicked()
     void onAllItemsButtonClicked()
     void onClearButtonClicked()
     void onCompleteItemsButtonClicked()
-    void onDescriptionColumnClicked()
-    void onDescriptionColumnEdit(CellEditEvent<Item, String>)
+    void onDateSortButtonClicked()
     void onDescriptionFieldFill()
     void onDueDateColumnEdit(CellEditEvent<Item, String>)
     void onExportButtonClicked()
@@ -44,12 +36,20 @@ class TodoListApplicationController {
     void onIncompleteItemsButtonClicked()
     void onRemoveButtonClicked()
     +void initialize()
+}
+
+class AboutSceneController {
+    ..@FXML Variables..
+    -ListView<Guide> guideList
+    -WebView guideView
+    ..Other Variables..
+    -WebEngine engine
+    -ObservableList<Guide> list
+    --
+    ..@FXML Methods..
+    +void initialize()
     ..Other Methods..
-    +void createAndAddItem(String, String)
-    +void removeSelectedItems(List<Item>)
-    +void clear()
-    +List<Item> getItemList()
-    +void setItemList(List<Item> newItemList)
+    +void loadPage(String)
 }
 
 class Item {
@@ -67,6 +67,28 @@ class Item {
     +void setCompleted(SimpleBooleanProperty)
 }
 
+class ItemList {
+    -ObservableList<Item> items
+
+    +void createAndAddItem(String, String)
+    +void createAndAddItem(String, LocalDate)
+    +void removeSelectedItems(List<Item>)
+    +void clear()
+    +void sortByDate()
+    +ObservableList<Item> getList()
+    +void setItemList(List<Item>)
+}
+
+class Guide {
+    -String title
+    -String localHtml
+
+    +String getLocalHtml()
+    +void setTitle(String)
+    +void setLocalHtml(String localHtml)
+    +String toString()
+}
+
 class Validator {
     +String verifyDescription(String)
     +String verifyDueDate(String)
@@ -81,16 +103,16 @@ class FileHandler {
     +String fileExport()
 }
 
-TodoListApplication -right- TodoListApplicationController : < Initializes Stage
-TodoListApplication -right- TodoListApplicationController : > Controls Stage
-TodoListApplicationController o-- Item
+TodoListApplication -- TodoListApplicationController : < Initializes Main Stage
+TodoListApplicationController -- AboutSceneController : < Initializes About Stage
+TodoListApplicationController o-- ItemList
 TodoListApplicationController o-- Validator
 TodoListApplicationController o-- FileHandler
+ItemList *-- Item
+AboutSceneController o-- Guide
 
-note right of TodoListApplicationController::items
+note right of ItemList::items
     Contains many Items
 end note
-
-
 
 @enduml
