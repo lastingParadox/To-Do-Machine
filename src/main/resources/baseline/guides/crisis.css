@@ -1,0 +1,55 @@
+@font-face {
+    font-family: "Century Gothic";
+    src: url("Century_Gothic.ttf");
+}
+
+@font-face {
+    font-family: "Century Gothic";
+    src: url("Century_Gothic.ttf");
+    unicode-range: U+30-59;
+}
+
+@font-face {
+    font-family: Orbitron;
+    src: url("Orbitron_Regular.ttf");
+}
+
+body {
+    font-family: "Century Gothic";
+    color: #d2d2d2;
+    background-color: #1c2d28;
+    margin-right: 2em;
+}
+
+ul {
+    list-style-type: square;
+}
+
+a {
+    color: #d2d2d2;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #c48520;
+    text-decoration: #c48520;
+}
+
+.number {
+    color: #cfd16c;
+    display: inline;
+}
+
+.format {
+    color: #c48520;
+    display: inline;
+}
+
+.header {
+    font-family: Orbitron;
+    font-weight: 500;
+}
+
+.warning {
+    color: #d6493c;
+}
