@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Editing Items</title>
+        <link rel="stylesheet" href="crisis.css">
+    </head>
+    <body>
+        <h1 class="header">Editing Items</h1>
+        <p>Editing items in To-Do Machine allows the user to change a list item's description and date in their to-do list.</p>
+        <ul>
+            <li><a href="#location">Where Do I Edit an Item?</a></li>
+            <ul>
+                <li><a href="#description">Description</a></li>
+                <li><a href="#duedate">Due Date</a></li>
+                <li><a href="#completed">Completed</a></li>
+            </ul>
+            
+        </ul>
+        <h2 class="header" id="location">Where Do I Edit an Item?</h2>
+        <p>In the table housing the items, the user can select either an item's description or due date by double-clicking it. Double-clicking a field will produce a text box for the user to enter in a new value and commit it into the system by pressing enter. An item's complete status may also be changed by clicking on the checkbox for the item.</p>
+
+        <h3 class="header" id="description">Description</h3>
+        <p style="display: inline">An item's description is a </p><p class="number">1</p> <p style="display: inline">to </p><p class="number">256</p> <p style="display: inline">character moniker used to denote what the user wants to do for that item. When editing an item's description, the description is still a mandatory part of the item, and as such, it cannot be outright deleted. As long as the new value is between </p><p class="number">1</p><p style="display: inline"> and </p><p class="number">256</p> <p style="display: inline">characters, the new value will become the item's description.</p>
+        <p class="warning">WARNING: AN ITEM'S DESCRIPTION MUST EXIST. IF THE DESCRIPTION FOR THE ITEM IS REMOVED, AN ERROR WILL OCCUR AND THE ITEM'S OLD DESCRIPTION WILL REMAIN.</p>
+        <p class="warning">WARNING: AN ITEM'S DESCRIPTION MUST BE BETWEEN 1 AND 256 CHARACTERS. IF THE USER ENTERS A VALUE GREATER THAN 256 CHARACTERS, THE PROGRAM WILL SHORTEN THE DESCRIPTION TO 256 CHARACTERS AND WILL DISPLAY A DIALOG BOX MENTIONING THE CHANGE.</p>
+
+        <h3 class="header" id="duedate">Due Date</h3>
+        <p style="display: inline">An item's due date is an optional field used to allow the user to set a time for when the item should be completed by. The due date is always displayed in the format "</p><p class="format">YYYY-MM-DD<p style="display: inline">", or "</p><p class="format">year-month-day</p><p style="display: inline">", and must be entered as such for the item's due date to change. As the due date is an optional field, the new value can be removed without an error.</p>
+        <p class="warning">WARNING: AN ITEM'S DUE DATE WILL NOT CHANGE IF THE USER ENTERS A NONVALID DATE VALUE IN THE FORMAT "YYYY-MM-DD". AN ERROR WILL OCCUR IF THIS HAPPENS AND THE OLD DATE WILL REMAIN.</p>
+
+        <h3 class="header" id="completed">Completed</h3>
+        <p style="display: inline">An item's completed value determines whether or not the item is considered completed. The Completed field is a simple checkbox and can be changed between incomplete (unchecked) and complete (checked) by clicking on the checkbox for the item.</p>
+
+    </body>
+</html>
