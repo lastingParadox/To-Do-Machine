@@ -16,6 +16,7 @@ public class ItemList {
     private final ObservableList<Item> items = FXCollections.observableArrayList();
 
     public void createAndAddItem(String descriptionField, String dueDateField) {
+        //Used in importing and testing
         Item item = new Item(descriptionField);
         if (!dueDateField.equals("")) {
             item.setDueDate(dueDateField);
@@ -24,6 +25,7 @@ public class ItemList {
     }
 
     public void createAndAddItem(String descriptionField, LocalDate dueDateField) {
+        //Used in adding a new item to the list from the "Create an Item" section
         Item item = new Item(descriptionField);
         if (dueDateField != null) {
             item.setDueDate(dueDateField);
@@ -40,6 +42,7 @@ public class ItemList {
     }
 
     public void sortByDate() {
+        //Sorts the items by date through a comparator lambda
         items.sort((o1, o2) -> {
             if (o1.getDueDate() == null) {
                 return (o2.getDueDate() == null) ? 0 : 1;

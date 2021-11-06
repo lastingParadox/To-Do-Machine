@@ -35,6 +35,7 @@ public class AboutSceneController {
         engine = guideView.getEngine();
 
         guideList.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> loadPage(newValue.getLocalHtml())));
+        guideList.getSelectionModel().select(0);
     }
 
     public void loadPage(String html) {

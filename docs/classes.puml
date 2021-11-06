@@ -82,11 +82,12 @@ class ItemList {
 class Guide {
     -String title
     -String localHtml
-
-    +String getLocalHtml()
-    +void setTitle(String)
-    +void setLocalHtml(String localHtml)
+    --
+    ..Overridden Methods..
     +String toString()
+    ..Other Methods..
+    +String getLocalHtml()
+
 }
 
 class Validator {
@@ -103,11 +104,22 @@ class FileHandler {
     +String fileExport()
 }
 
+class WrappedTextFieldTableCell {
+    -Text description
+    --
+    ..Overridden Methods..
+    +void cancelEdit()
+    +void updateItem(Item, boolean)
+    ..Other Methods..
+    +Text wrappedText()
+}
+
 TodoListApplication -- TodoListApplicationController : < Initializes Main Stage
 TodoListApplicationController -- AboutSceneController : < Initializes About Stage
 TodoListApplicationController o-- ItemList
 TodoListApplicationController o-- Validator
 TodoListApplicationController o-- FileHandler
+TodoListApplicationController o-- WrappedTextFieldTableCell
 ItemList *-- Item
 AboutSceneController o-- Guide
 

@@ -28,6 +28,7 @@ public class FileHandler {
     }
 
     public List<Item> fileImport() {
+        //Imports a list from file provided.
         List<Item> importList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line = reader.readLine();
@@ -42,9 +43,7 @@ public class FileHandler {
                 importList.add(item);
                 line = reader.readLine();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (Exception e) {
             return Collections.emptyList();
         }
 
@@ -52,6 +51,7 @@ public class FileHandler {
     }
 
     public String fileExport() {
+        //Exports the list to the file provided.
         StringBuilder output = new StringBuilder();
         try (FileWriter writer = new FileWriter(path)) {
             for (Item item : list) {

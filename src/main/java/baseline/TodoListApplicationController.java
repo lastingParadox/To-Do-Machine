@@ -8,7 +8,6 @@ package baseline;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,12 +18,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import javax.print.DocFlavor;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -74,6 +71,7 @@ public class TodoListApplicationController {
 
     @FXML
     void onAboutButtonClicked() throws IOException {
+        //Creates a new window for the about menu and shows it to the user.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("about.fxml"));
         Parent root = loader.load();
 
@@ -112,6 +110,7 @@ public class TodoListApplicationController {
 
     @FXML
     void onAllItemsButtonClicked() {
+        //Shows all items in the list in the table.
         itemTable.setItems(items.getList());
     }
 
@@ -132,12 +131,14 @@ public class TodoListApplicationController {
 
     @FXML
     void onCompleteItemsButtonClicked() {
+        //Filters the item list, only showing completed items.
         FilteredList<Item> completeItems = new FilteredList<>(items.getList(), Item::getCompletedValue);
         itemTable.setItems(completeItems);
     }
 
     @FXML
     void onDateSortButtonClicked() {
+        //Sorts the item list by date.
         items.sortByDate();
     }
 
@@ -185,6 +186,7 @@ public class TodoListApplicationController {
 
     @FXML
     void onExportButtonClicked() {
+        //Shows the user a save dialog box and exports the list to the file provided.
         Stage stage = (Stage) importButton.getScene().getWindow();
         FileChooser fileExport = new FileChooser();
         fileExport.setTitle("Export To Do List File");
@@ -207,6 +209,7 @@ public class TodoListApplicationController {
 
     @FXML
     void onImportButtonClicked() {
+        //Shows the user an open dialog box and imports the file provided.
         Stage stage = (Stage) exportButton.getScene().getWindow();
         FileChooser fileImport = new FileChooser();
         fileImport.setTitle("Select To Do List File");
@@ -237,6 +240,7 @@ public class TodoListApplicationController {
 
     @FXML
     void onIncompleteItemsButtonClicked() {
+        //Filters the item list, only showing the incomplete items.
         FilteredList<Item> incompleteItems = new FilteredList<>(items.getList(), t -> ! t.getCompletedValue());
         itemTable.setItems(incompleteItems);
     }
@@ -259,7 +263,7 @@ public class TodoListApplicationController {
 
         //Initializes the columns and what each column contains
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        descriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        descriptionColumn.setCellFactory(column -> new WrappedTextFieldTableCell<>());
 
         dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         dueDateColumn.setCellFactory(TextFieldTableCell.forTableColumn());

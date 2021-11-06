@@ -67,7 +67,7 @@
 .list-cell {
     -fx-background-color: transparent;
     -fx-text-fill: -fx-text-color;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-font-family: "Century Gothic";
     -fx-cell-size: 25px;
     -fx-alignment: center;
@@ -106,11 +106,15 @@
     -fx-alignment: center;
 }
 
+.wrapped-text-field-table-cell Text {
+    -fx-fill: -fx-text-color;
+}
+
 .table-view .scroll-bar:horizontal .increment-arrow,
 .table-view .scroll-bar:horizontal .decrement-arrow,
 .table-view .scroll-bar:horizontal .increment-button,
 .table-view .scroll-bar:horizontal .decrement-button {
-    -fx-padding:0;
+    -fx-padding: 0;
 }
 
 .table-view .scroll-bar:vertical,

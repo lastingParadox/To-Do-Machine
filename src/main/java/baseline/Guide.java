@@ -6,8 +6,8 @@
 package baseline;
 
 public class Guide {
-    private String title;
-    private String localHtml;
+    private final String title;
+    private final String localHtml;
 
     Guide(String title, String localHtml) {
         this.title = title;
@@ -16,14 +16,6 @@ public class Guide {
 
     public String getLocalHtml() {
         return localHtml;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setLocalHtml(String localHtml) {
-        this.localHtml = localHtml;
     }
 
     @Override
