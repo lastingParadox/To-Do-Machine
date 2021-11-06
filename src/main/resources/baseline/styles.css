@@ -67,8 +67,15 @@
 .list-cell {
     -fx-background-color: transparent;
     -fx-text-fill: -fx-text-color;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
     -fx-cell-size: 25px;
     -fx-alignment: center;
+}
+
+.list-cell:selected {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-border-color: -fx-select-color;
 }
 
 .table-view {
@@ -78,10 +85,16 @@
     -fx-text-alignment: center;
 }
 
-.table-view .column-header {
+.table-view .column-header,
+.table-view .column-header .filler {
     -fx-background-color: -fx-header-color;
     -fx-text-alignment: center;
     -fx-alignment: center;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: -fx-header-color;
+    -fx-padding: 1em;
 }
 
 .table-view .table-cell {
@@ -93,12 +106,33 @@
     -fx-alignment: center;
 }
 
+.table-view .scroll-bar:horizontal .increment-arrow,
+.table-view .scroll-bar:horizontal .decrement-arrow,
+.table-view .scroll-bar:horizontal .increment-button,
+.table-view .scroll-bar:horizontal .decrement-button {
+    -fx-padding:0;
+}
+
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:vertical .corner,
+.table-view .scroll-bar:vertical .filler,
+.table-view .scroll-bar:vertical .increment-button,
+.table-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color: #121b19;
+    -fx-background-insets: 0,0,0;
+    -fx-background-radius: 0px;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: -fx-secondary-color;
+}
+
 .table-row-cell {
     -fx-background-color: #121b19;
     -fx-cell-size: 30px;
 }
 
-.table-row-cell:selected, .list-cell:selected {
+.table-row-cell:selected {
     -fx-background-color: -fx-select-color, #121b19;
     -fx-background-insets: 0, 2 1 1 1;
     -fx-padding: 0 0 0 0;
@@ -112,6 +146,7 @@
     -fx-alignment: center;
     -fx-text-fill: -fx-text-color;
 }
+
 
 .check-box .box {
     -fx-background-color: -fx-primary-color;

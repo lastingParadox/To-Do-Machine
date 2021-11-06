@@ -30,7 +30,7 @@ public class AboutSceneController {
         list.addAll(new Guide("Adding Items", "addItems.html"),
                     new Guide("Removing Items", "removeItems.html"),
                     new Guide("Editing Items", "editItems.html"),
-                    new Guide("Importing and Exporting Lists", "importExport.html"));
+                    new Guide("Importing and Exporting", "importExport.html"));
         guideList.setItems(list);
         engine = guideView.getEngine();
 

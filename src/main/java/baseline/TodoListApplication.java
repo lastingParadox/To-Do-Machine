@@ -20,11 +20,13 @@ public class TodoListApplication extends javafx.application.Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
 
         Scene scene = new Scene(root);
-        stage.setResizable(false);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
         stage.setTitle("To-Do Machine");
         stage.setScene(scene);
+        stage.sizeToScene();
         stage.show();
+        stage.setMinWidth(stage.getWidth());
+        stage.setMinHeight(stage.getHeight());
     }
 
     public static void main(String[] args) {
