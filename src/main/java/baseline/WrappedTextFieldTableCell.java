@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class WrappedTextFieldTableCell<S> extends TextFieldTableCell<S, String> {
     //Only exists for the sake of having a TextFieldTableCell with wrapped text.
-    //As this extends a TextFieldTableCell, this class has many parents.
+    //As this extends a TextFieldTableCell, this class has many parents, hence the potential linter warning.
 
     private final Text description;
 

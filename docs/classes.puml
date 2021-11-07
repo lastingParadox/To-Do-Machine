@@ -47,6 +47,7 @@ class AboutSceneController {
     -ObservableList<Guide> list
     --
     ..@FXML Methods..
+    void onCloseButtonClicked()
     +void initialize()
     ..Other Methods..
     +void loadPage(String)

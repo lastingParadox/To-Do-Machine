@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Objects;
@@ -26,11 +27,19 @@ public class AboutSceneController {
     private final ObservableList<Guide> list = FXCollections.observableArrayList();
 
     @FXML
+    void onCloseButtonClicked() {
+        Stage stage = (Stage) guideList.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
     public void initialize() {
         list.addAll(new Guide("Adding Items", "addItems.html"),
                     new Guide("Removing Items", "removeItems.html"),
                     new Guide("Editing Items", "editItems.html"),
+                    new Guide("Sorting and Filtering", "sortItems.html"),
                     new Guide("Importing and Exporting", "importExport.html"));
+        guideList.fixedCellSizeProperty().set(25);
         guideList.setItems(list);
         engine = guideView.getEngine();
 
