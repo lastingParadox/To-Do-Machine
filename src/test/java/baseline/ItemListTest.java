@@ -5,6 +5,7 @@
 
 package baseline;
 
+import javafx.collections.transformation.FilteredList;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -88,4 +89,45 @@ class ItemListTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    void sortByDateTest() {
+        List<Item> items = new ArrayList<>();
+        items.add(new Item("Test Description", "2022-10-31"));
+        items.add(new Item("Test Description 2", "2021-10-31"));
+        test.setItemList(items);
+
+        test.sortByDate();
+
+        List<Item> actualList = test.getList();
+        String actual = actualList.get(0).getDescription() + actualList.get(1).getDescription();
+        String expected = items.get(1).getDescription() + items.get(0).getDescription();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void filterCompleteItemsTest() {
+        List<Item> items = new ArrayList<>();
+        items.add(new Item("Test Description", "2022-10-31", false));
+        items.add(new Item("Test Description 2", "2021-10-31", true));
+        test.setItemList(items);
+
+        FilteredList<Item> actual = test.filterCompleteItems();
+
+        assertEquals("Test Description 2", actual.get(0).getDescription());
+    }
+
+    @Test
+    void filterIncompleteItemsTest() {
+        List<Item> items = new ArrayList<>();
+        items.add(new Item("Test Description", "2022-10-31", true));
+        items.add(new Item("Test Description 2", "2021-10-31", false));
+        test.setItemList(items);
+
+        FilteredList<Item> actual = test.filterIncompleteItems();
+
+        assertEquals("Test Description 2", actual.get(0).getDescription());
+    }
+
 }

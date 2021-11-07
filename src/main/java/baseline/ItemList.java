@@ -7,6 +7,7 @@ package baseline;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -52,6 +53,14 @@ public class ItemList {
             }
             return o1.getDueDate().compareTo(o2.getDueDate());
         });
+    }
+
+    public FilteredList<Item> filterCompleteItems() {
+        return new FilteredList<>(getList(), Item::getCompletedValue);
+    }
+
+    public FilteredList<Item> filterIncompleteItems() {
+        return new FilteredList<>(getList(), t -> ! t.getCompletedValue());
     }
 
     public ObservableList<Item> getList() {

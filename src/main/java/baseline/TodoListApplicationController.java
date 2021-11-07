@@ -132,7 +132,7 @@ public class TodoListApplicationController {
     @FXML
     void onCompleteItemsButtonClicked() {
         //Filters the item list, only showing completed items.
-        FilteredList<Item> completeItems = new FilteredList<>(items.getList(), Item::getCompletedValue);
+        FilteredList<Item> completeItems = items.filterCompleteItems();
         itemTable.setItems(completeItems);
     }
 
@@ -241,7 +241,7 @@ public class TodoListApplicationController {
     @FXML
     void onIncompleteItemsButtonClicked() {
         //Filters the item list, only showing the incomplete items.
-        FilteredList<Item> incompleteItems = new FilteredList<>(items.getList(), t -> ! t.getCompletedValue());
+        FilteredList<Item> incompleteItems = items.filterIncompleteItems();
         itemTable.setItems(incompleteItems);
     }
 
