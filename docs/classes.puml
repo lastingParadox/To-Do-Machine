@@ -76,6 +76,8 @@ class ItemList {
     +void removeSelectedItems(List<Item>)
     +void clear()
     +void sortByDate()
+    +FilteredList<Item> filterCompleteItems()
+    +FilteredList<Item> filterIncompleteItems()
     +ObservableList<Item> getList()
     +void setItemList(List<Item>)
 }
