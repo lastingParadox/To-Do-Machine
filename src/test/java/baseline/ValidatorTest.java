@@ -6,6 +6,8 @@
 package baseline;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,26 +35,17 @@ class ValidatorTest {
         assertEquals(expected, actual);
     }
 
+    @ParameterizedTest
+    @CsvSource({"2021-12-10,2021-12-10", "bruh,error"})
+    void verifyDueDateTest(String input, String expected) {
+        String actual = test.verifyDueDate(input);
+        assertEquals(expected, actual);
+    }
+
     @Test
     void verifyDueDateTestNull() {
         String expected = "";
         String actual = test.verifyDueDate("");
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void verifyDueDateTestSuccess() {
-        String expected = "2021-12-10";
-        String actual = test.verifyDueDate("2021-12-10");
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void verifyDueDateTestError() {
-        String expected = "error";
-        String actual = test.verifyDueDate("bruh");
 
         assertEquals(expected, actual);
     }
